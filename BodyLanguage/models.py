@@ -5,12 +5,9 @@ from django.db import models
 # Create your models here.
 class AppUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
-  # read, test results i statistics se vrzani so user-ot, trebaat foreign keys
-class Read(models.Model):
-    read = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, default=None)
+    surname = models.CharField(max_length=50, default=None)
+    email = models.EmailField(default=None)
 
 
 class BodyPartGesture(models.Model):
@@ -22,7 +19,6 @@ class BodyPartGesture(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
-    read = models.ForeignKey(Read, on_delete=models.CASCADE)
 
 
 class Emotion(models.Model):
@@ -32,7 +28,6 @@ class Emotion(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
-    read = models.BooleanField()
 
 
 class ContextGesture(models.Model):
@@ -45,7 +40,6 @@ class ContextGesture(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
-    read = models.ForeignKey(Read, on_delete=models.CASCADE)
 
 
 class Behaviour(models.Model):
@@ -55,12 +49,20 @@ class Behaviour(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
-    read = models.ForeignKey(Read, on_delete=models.CASCADE)
+
+
+class Read(models.Model):
+    read = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=False)
+    body_part_gesture = models.ForeignKey(BodyPartGesture, on_delete=models.CASCADE, default=False)
+    emotion = models.ForeignKey(Emotion, on_delete=models.CASCADE, default=False)
+    context_gesture = models.ForeignKey(ContextGesture, on_delete=models.CASCADE, default=False)
+    behaviour = models.ForeignKey(Behaviour, on_delete=models.CASCADE, default=False)
 
 
 class TestResults(models.Model):
     # mislam deka nema potreba da se stavaat vo baza, na front end e dovolno, samo poenite ni se dovolni, kje se proveruva dali se tochni na frontend
-    id = models.IntegerField()
+    id = models.IntegerField(primary_key=True)
     points = models.IntegerField()
     taken = models.BooleanField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
