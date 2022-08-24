@@ -4,13 +4,7 @@ from django.contrib import admin
 from BodyLanguage.models import *
 
 
-class ReadInlineAdmin(admin.StackedInline):
-    model = Read
-    extra = 0
-
-
 class BodyPartGestureAdmin(admin.ModelAdmin):
-    inlines = [ReadInlineAdmin, ]
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -18,6 +12,11 @@ class BodyPartGestureAdmin(admin.ModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         return False
@@ -25,8 +24,8 @@ class BodyPartGestureAdmin(admin.ModelAdmin):
 
 admin.site.register(BodyPartGesture, BodyPartGestureAdmin)
 
+
 class EmotionAdmin(admin.ModelAdmin):
-    inlines = [ReadInlineAdmin, ]
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -34,6 +33,11 @@ class EmotionAdmin(admin.ModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         return False
@@ -43,7 +47,6 @@ admin.site.register(Emotion, EmotionAdmin)
 
 
 class ContextGestureAdmin(admin.ModelAdmin):
-    inlines = [ReadInlineAdmin, ]
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -51,6 +54,11 @@ class ContextGestureAdmin(admin.ModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         return False
@@ -60,7 +68,6 @@ admin.site.register(ContextGesture, ContextGestureAdmin)
 
 
 class BehaviourAdmin(admin.ModelAdmin):
-    inlines = [ReadInlineAdmin, ]
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -68,6 +75,11 @@ class BehaviourAdmin(admin.ModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         return False

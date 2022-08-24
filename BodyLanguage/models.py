@@ -19,6 +19,7 @@ class BodyPartGesture(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
+    read = models.BooleanField(default=False)
 
 
 class Emotion(models.Model):
@@ -28,6 +29,7 @@ class Emotion(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
+    read = models.BooleanField(default=False)
 
 
 class ContextGesture(models.Model):
@@ -40,6 +42,7 @@ class ContextGesture(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
+    read = models.BooleanField(default=False)
 
 
 class Behaviour(models.Model):
@@ -49,15 +52,7 @@ class Behaviour(models.Model):
     female = models.BooleanField()
     adult = models.BooleanField()
     child = models.BooleanField()
-
-
-class Read(models.Model):
-    read = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=False)
-    body_part_gesture = models.ForeignKey(BodyPartGesture, on_delete=models.CASCADE, default=False)
-    emotion = models.ForeignKey(Emotion, on_delete=models.CASCADE, default=False)
-    context_gesture = models.ForeignKey(ContextGesture, on_delete=models.CASCADE, default=False)
-    behaviour = models.ForeignKey(Behaviour, on_delete=models.CASCADE, default=False)
+    read = models.BooleanField(default=False)
 
 
 class TestResults(models.Model):

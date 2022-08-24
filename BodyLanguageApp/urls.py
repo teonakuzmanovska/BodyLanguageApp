@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from BodyLanguage.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('index/', index, name="index"),
+    path('tips/', tips, name="tips"),
+    path('contact/', contact, name="contact"),
+    path('help/', helphtml, name="help")
 ]
