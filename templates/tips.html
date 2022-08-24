@@ -10,7 +10,7 @@
 </head>
 <body>
 {# header #}
-<nav class="row justify-content-center small navbar navbar-expand-lg navbar-light bg-light">
+<nav class="row justify-content-center navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid col-4">
         <div class="navbar-header">
             <a class="navbar-brand" href="{% url "index" %}">Home</a>
@@ -26,10 +26,10 @@
     <div class="col-4 bg-light">
         <div class="row justify-content-center">
             <a class="btn col-2 m-2 shadow" href="{% url "tips" %}"><h2>💡</h2></a>
-            <a class="btn col-2 m-2 shadow"><h2>🌐</h2></a>
-            <a class="btn col-2 m-2 shadow"><h2>📖</h2></a>
-            <a class="btn col-2 m-2 shadow"><h2>📝</h2></a>
-            <a class="btn col-2 m-2 shadow"><h2>📈</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "articles" %}"><h2>🌐</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "categories" %}"><h2>📖</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "quizzes" %}"><h2>📝</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "progress" %}"><h2>📈</h2></a>
         </div>
     </div>
 </footer>

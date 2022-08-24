@@ -21,7 +21,11 @@ from BodyLanguage.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name="index"),
-    path('tips/', tips, name="tips"),
     path('contact/', contact, name="contact"),
-    path('help/', helphtml, name="help")
+    path('help/', helphtml, name="help"),
+    path('tips/', tips, name="tips"),
+    path('articles/', articles, name="articles"),
+    path('categories/', categories, name="categories"),
+    path('quizzes/', quizzes, name="quizzes"),
+    path('progress/', progress, name="progress")
 ]
