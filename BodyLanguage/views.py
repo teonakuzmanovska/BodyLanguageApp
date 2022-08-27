@@ -50,7 +50,7 @@ def context(request):
 
 def bp_face(request):
     queryset = BodyPartGesture.objects.filter(category="eyes").all()
-    queryset2 = MeaningGesture.objects.all()
-    context = {"bp_face": queryset, "meanings": queryset2}
+    # queryset2 = MeaningGesture.objects.all()
+    context = {"bp_face": queryset}
     return render(request, "bp_face.html", context=context)
 
