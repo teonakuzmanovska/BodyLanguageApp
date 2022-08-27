@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from BodyLanguage.models import *
 
 
 def index(request):
@@ -33,4 +34,22 @@ def quizzes(request):
 
 def progress(request):
     return render(request, "progress.html")
+
+
+def body_parts(request):
+    return render(request, "body_parts.html")
+
+
+def emotions(request):
+    return render(request, "emotions.html")
+
+
+def context(request):
+    return render(request, "context.html")
+
+
+def bp_face(request):
+    queryset = BodyPartGesture.objects.filter(category="eyes").all()
+    context = {"bp_face": queryset}
+    return render(request, "bp_face.html", context=context)
 
