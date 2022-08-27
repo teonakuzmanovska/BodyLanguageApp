@@ -6,9 +6,9 @@ from django.contrib.admin import display
 from BodyLanguage.models import *
 
 
-# class MeaningGestureAdmin(admin.StackedInline):
-#     model = MeaningGesture
-#     extra = 0
+class MeaningGestureAdmin(admin.StackedInline):
+    model = MeaningGesture
+    extra = 0
 
 
 class MeaningAdmin(admin.ModelAdmin):
@@ -34,13 +34,13 @@ admin.site.register(Meaning, MeaningAdmin)
 
 
 class BodyPartGestureAdmin(admin.ModelAdmin):
-    list_display = ('gesture', 'category', 'get_feeling')
-    # inlines = [MeaningGestureAdmin, ]
+    list_display = ('gesture', 'category')
+    inlines = [MeaningGestureAdmin, ]
     list_filter = ('category', )
 
-    @display(ordering='feeling__meaning', description='Meaning')
-    def get_feeling(self, obj):
-        return obj.feeling.meaning
+    # @display(ordering='feeling__meaning', description='Meaning')
+    # def get_feeling(self, obj):
+    #     return obj.feeling.meaning
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:

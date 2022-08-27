@@ -11,14 +11,14 @@ class AppUser(models.Model):
 
 
 class Meaning(models.Model):
-    meaning = models.CharField(max_length=50, null=True, blank=True)
+    meaning = models.CharField(max_length=50)
 
 
 class BodyPartGesture(models.Model):
     gesture = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to="images/")
-    feeling = models.ForeignKey(Meaning, on_delete=models.CASCADE, null=True, blank=True)
+    # feeling = models.ForeignKey(Meaning, on_delete=models.CASCADE, null=True, blank=True)
     # feeling = models.CharField(max_length=50, blank=True, null=True)
     male = models.BooleanField()
     female = models.BooleanField()
@@ -27,9 +27,9 @@ class BodyPartGesture(models.Model):
     read = models.BooleanField(default=False)
 
 
-# class MeaningGesture(models.Model):
-#     meaning = models.ForeignKey(Meaning, on_delete=models.CASCADE)
-#     gesture = models.ForeignKey(BodyPartGesture, on_delete=models.CASCADE)
+class MeaningGesture(models.Model):
+    meaning = models.ForeignKey(Meaning, on_delete=models.CASCADE)
+    gesture = models.ForeignKey(BodyPartGesture, on_delete=models.CASCADE)
 
 
 class ContextGesture(models.Model):
