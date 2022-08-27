@@ -21,8 +21,6 @@ class BodyPartGesture(models.Model):
     gesture = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to="images/")
-    # feeling = models.ForeignKey(Meaning, on_delete=models.CASCADE, null=True, blank=True)
-    # feeling = models.CharField(max_length=50, blank=True, null=True)
     meaning = models.ManyToManyField(Meaning)
     male = models.BooleanField()
     female = models.BooleanField()
@@ -32,14 +30,6 @@ class BodyPartGesture(models.Model):
 
     def str(self):
         return str(self.meaning)
-
-
-# class MeaningGesture(models.Model):
-#     gesture = models.ForeignKey(Meaning, on_delete=models.CASCADE, related_name='meaning')
-#     gesture = models.ForeignKey(BodyPartGesture, on_delete=models.CASCADE, related_name='gesture_gesture')
-
-    # def str(self):
-    #     return str(self.meaning)
 
 
 class ContextGesture(models.Model):

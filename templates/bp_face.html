@@ -43,20 +43,20 @@
                         </tr>
                         <tr>
                             {% if  bp_f.adult and bp_f.male%}
+                                <td>
                                 {% for meaning in bp_f.meaning.all %}
-{#                                    <tr>#}
-                                        <td>{{ meaning.meaning }}</td>
-{#                                    </tr>#}
+                                    {{ meaning.meaning }}
+                                    <br>
                                 {% endfor %}
-{#                                <td>{{ bp_f.meaning.all|join:"," }}</td>#}
+                                </td>
                             {% endif %}
                             {% if  bp_f.adult and bp_f.female%}
+                                <td>
                                 {% for meaning in bp_f.meaning.all %}
-{#                                    <tr>#}
-                                        <td>{{ meaning.meaning }}</td>
-{#                                    </tr>#}
+                                    {{ meaning.meaning }}
+                                    <br>
                                 {% endfor %}
-{#                                <td>{{ bp_f.meaning.all|join:"," }}</td>#}
+                                </td>
                             {% endif %}
                         </tr>
                         </table>
@@ -70,30 +70,25 @@
                             <th>Female</th>
                         </tr>
                         <tr>
-{#                        {% for meaning in meanings %}#}
-{#                            {% if meaning.gesture == bp_f.gesture and bp_f.child %}#}
-{#                                {% if bp_f.male %}#}
-{#                                    <td>{{ meaning.meaning }}</td>#}
-{#                                {% endif %}#}
-{#                                {% if  bp_f.female %}#}
-{#                                    <td>{{ meaning.meaning }}</td>#}
-{#                                {% endif %}#}
-{#                            {% endif %}#}
-{#                            {% if  bp_f.child and bp_f.male and meaning.gesture == bp_f.gesture %}#}
-{#                                <td>{{ meaning.meaning }}</td>#}
-{#                            {% endif %}#}
-{#                            {% if  bp_f.child and bp_f.female %}#}
-{#                                <td>{{ meaning.meaning }}</td>#}
-{#                            {% endif %}#}
-{#                        {% endfor %}#}
                             {% if  bp_f.adult and bp_f.male%}
-                                <td>{{ bp_f.meaning.all|join:"," }}</td>
+                                <td>
+                                {% for meaning in bp_f.meaning.all %}
+                                    {{ meaning.meaning }}
+                                    <br>
+                                {% endfor %}
+                                </td>
                             {% endif %}
                             {% if  bp_f.adult and bp_f.female%}
-                                <td>{{ bp_f.meaning.all|join:"," }}</td>
+                                <td>
+                                {% for meaning in bp_f.meaning.all %}
+                                    {{ meaning.meaning }}
+                                    <br>
+                                {% endfor %}
+                                </td>
                             {% endif %}
                         </tr>
                         </table>
+
                     </div>
                 </div>
             {% endfor %}

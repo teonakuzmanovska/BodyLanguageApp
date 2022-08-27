@@ -35,12 +35,7 @@ admin.site.register(Meaning, MeaningAdmin)
 
 class BodyPartGestureAdmin(admin.ModelAdmin):
     list_display = ('gesture', 'category')
-    # inlines = [MeaningGestureAdmin, ]
-    list_filter = ('category', )
-
-    # @display(ordering='meaning__meaning', description='Meaning')
-    # def get_meaning(self, obj):
-    #     return obj.meaning.meaning
+    list_filter = ('category', 'meaning')
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
