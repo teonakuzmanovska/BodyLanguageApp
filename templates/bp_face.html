@@ -31,7 +31,17 @@
                     <div class="card my-4" style="width: 18rem;">
                         <img src="{{ MEDIA_URL }}{{ bp_f.image.url }}" class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title">{{ bp_f.gesture }}</h5>
+                            <div class="row text-center">
+                                <h5 class="card-title col-10">{{ bp_f.gesture }}</h5>
+                                {% if not bp_f.read %}
+{#                                    sredi go id-to da bide razlichno za sekoe#}
+                                    <button class="btn col-2 p-0" id="{{ bp_f.gesture }}read" onclick="read('{{ bp_f.gesture }}read')">☑</button>
+                                {% endif %}
+                                {% if bp_f.read %}
+                                    <button class="btn col-2 p-0" id="{{ bp_f.gesture}}read" onclick="read('{{ bp_f.gesture }}read')">✅</button>
+                                {% endif %}
+
+                            </div>
                         </div>
                     </div>
                     <div class="my-4">
@@ -114,6 +124,27 @@
         x.style.display = "block";
       else
         x.style.display = "none";
+    }
+
+    {# neka prima dva argumenti, read atributot mi treba #}
+    function read(id)
+    {
+        if (document.getElementById(id).innerHTML === "✅")
+        {
+            document.getElementById(id).innerHTML = "☑";
+
+{#            kje treba kopcheto da ja zadrzhi sostojbata vo zavisnost od korisnikot#}
+{#            {% for bp_f in bp_face %}#}
+{#                {% if bp_f.read == state %}#}
+{#                    {{ bp_f.read }}#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+
+        }
+        else
+        {
+            document.getElementById(id).innerHTML = "✅";
+        }
     }
 </script>
 </body>
