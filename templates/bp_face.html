@@ -10,7 +10,7 @@
 </head>
 <body>
 {# header #}
-<nav class="row justify-content-center navbar navbar-expand-lg navbar-light bg-light">
+<nav class="row justify-content-center navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid col-4">
         <div class="navbar-header">
             <a class="navbar-brand" href="{% url "index" %}">Home</a>
@@ -26,8 +26,8 @@
         <h3 class="my-5 text-center">Face</h3>
         <div class="d-grid gap-2-auto justify-content-center">
             {% for bp_f in bp_face %}
-                <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="myFunction('{{ bp_f.gesture }}')"><b>{{ bp_f.gesture }}</b></button>
-                <div id="{{ bp_f.gesture }}" style="display: none">
+                <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="myFunction('{{ bp_f.id }}')"><b>{{ bp_f.gesture }}</b></button>
+                <div id="{{ bp_f.id }}" style="display: none">
                     <div class="card my-4" style="width: 18rem;">
                         <img src="{{ MEDIA_URL }}{{ bp_f.image.url }}" class="card-img-top">
                         <div class="card-body">
@@ -35,15 +35,15 @@
                                 <h5 class="card-title col-10">{{ bp_f.gesture }}</h5>
                                 {% if not bp_f.read %} {# ako ne e prochitana lekcijata #}
 {#                                    sredi go id-to da bide razlichno za sekoe#}
-{#                                    <form method="post">#}
+{#                                    <form method="post" id="{{ bp_f.id }}form">#}
 {#                                        {% csrf_token %}#}
-                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.gesture }}read" onclick="read('{{ bp_f.gesture }}read')">☑</button>
+                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read')">☑</button>
 {#                                    </form>#}
                                 {% endif %}
-                                {% if bp_f.read %} {# ako ne e prochitana lekcijata #}
-{#                                    <form method="post">#}
+                                {% if bp_f.read %} {# ako e prochitana lekcijata #}
+{#                                    <form method="post" id="{{ bp_f.id }}form">#}
 {#                                        {% csrf_token %}#}
-                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.gesture}}read" onclick="read('{{ bp_f.gesture }}read')">✅</button>
+                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read' {# kako argumenti sakam da gi pratam i read value i id na formata #})">✅</button>
 {#                                    </form>#}
                                 {% endif %}
                             </div>
@@ -111,7 +111,7 @@
     </div>
 </div>
 {# footer #}
-<footer class="row justify-content-center bg-light">
+<footer class="row justify-content-center bg-light fixed-bottom">
     <div class="col-4 bg-light">
         <div class="row justify-content-center">
             <a class="btn col-2 m-2 shadow" href="{% url "tips" %}"><h2>💡</h2></a>
@@ -159,15 +159,18 @@
             points--;
             document.getElementById(id).innerHTML = "✅";
         }
-
-        return points;
+        {##}
+        {#document.getElementById("forma").innerHTML = "<input type='hidden' name='lat' value="+lat+">" +#}
+        {#"<input type='hidden' name='lon' value="+lon+">"#}
+        {##}
+        {#return points;#}
     }
 
     // points treba da gi predademe preku hidden form. Mozhe da gi pratime kako rezultat na nekoja funkcija u html i preku html da gi pratime u formata
 
     {#function getPoints()#}
     {#{#}
-    {#   return points;}#}
+    {#   return points;    }#}
 
 </script>
 </body>

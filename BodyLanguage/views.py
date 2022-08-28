@@ -55,9 +55,9 @@ def bp_face(request):
     #     if form_data.is_valid():
     #         statistics = form_data.save(commit=False)
     #         statistics.user = request.user
-    #         statistics.lectures = form_data.cleaned_data['lectures']
+    #         statistics.lectures += form_data.cleaned_data['lectures']  # ovde sakam da gi dodadam/odzemam poenite shto se prevzemeni od formata
     #         statistics.save()
-    #         return redirect("bp_face")
+    #         return redirect("bp_face")  # da ne se zbuni so redirect-ov?
 
     queryset = BodyPartGesture.objects.filter(category="eyes").all()
     context = {"bp_face": queryset}  # , "form": form_data
