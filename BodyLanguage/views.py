@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from BodyLanguage.models import *
@@ -49,8 +49,18 @@ def context(request):
 
 
 def bp_face(request):
+    # za ova ich ne sum sigurna
+    # if request.method == "post":
+    #     form_data = Statistics(data=request.POST, files=request.FILES)
+    #     if form_data.is_valid():
+    #         statistics = form_data.save(commit=False)
+    #         statistics.user = request.user
+    #         statistics.lectures = form_data.cleaned_data['lectures']
+    #         statistics.save()
+    #         return redirect("bp_face")
+
     queryset = BodyPartGesture.objects.filter(category="eyes").all()
-    # queryset2 = MeaningGesture.objects.all()
-    context = {"bp_face": queryset}
+    context = {"bp_face": queryset}  # , "form": form_data
     return render(request, "bp_face.html", context=context)
+
 

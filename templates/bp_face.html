@@ -33,14 +33,19 @@
                         <div class="card-body">
                             <div class="row text-center">
                                 <h5 class="card-title col-10">{{ bp_f.gesture }}</h5>
-                                {% if not bp_f.read %}
+                                {% if not bp_f.read %} {# ako ne e prochitana lekcijata #}
 {#                                    sredi go id-to da bide razlichno za sekoe#}
-                                    <button class="btn col-2 p-0" id="{{ bp_f.gesture }}read" onclick="read('{{ bp_f.gesture }}read')">☑</button>
+{#                                    <form method="post">#}
+{#                                        {% csrf_token %}#}
+                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.gesture }}read" onclick="read('{{ bp_f.gesture }}read')">☑</button>
+{#                                    </form>#}
                                 {% endif %}
-                                {% if bp_f.read %}
-                                    <button class="btn col-2 p-0" id="{{ bp_f.gesture}}read" onclick="read('{{ bp_f.gesture }}read')">✅</button>
+                                {% if bp_f.read %} {# ako ne e prochitana lekcijata #}
+{#                                    <form method="post">#}
+{#                                        {% csrf_token %}#}
+                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.gesture}}read" onclick="read('{{ bp_f.gesture }}read')">✅</button>
+{#                                    </form>#}
                                 {% endif %}
-
                             </div>
                         </div>
                     </div>
@@ -117,6 +122,7 @@
         </div>
     </div>
 </footer>
+
 <script>
     function myFunction(gesture) {
       let x = document.getElementById(gesture);
@@ -127,13 +133,19 @@
     }
 
     {# neka prima dva argumenti, read atributot mi treba #}
+{#    funkcijava kje ja smenime so jquery, kopcheto kje go izgenerirame tuka vo zavisnost od vrednosta na read na prateniot element od gore #}
+
+    let points = 0;
+
     function read(id)
     {
         if (document.getElementById(id).innerHTML === "✅")
         {
             document.getElementById(id).innerHTML = "☑";
+            points++; // ako e prochitana dodavame poeni
 
 {#            kje treba kopcheto da ja zadrzhi sostojbata vo zavisnost od korisnikot#}
+{#            da napravime edna hidden forma koja kje gi prima poenite od tekovnata sesija i kje gi dodade preku view vo modelot za poeni #}
 {#            {% for bp_f in bp_face %}#}
 {#                {% if bp_f.read == state %}#}
 {#                    {{ bp_f.read }}#}
@@ -143,9 +155,20 @@
         }
         else
         {
+            // odzemame poeni ako se trgne od prochitana
+            points--;
             document.getElementById(id).innerHTML = "✅";
         }
+
+        return points;
     }
+
+    // points treba da gi predademe preku hidden form. Mozhe da gi pratime kako rezultat na nekoja funkcija u html i preku html da gi pratime u formata
+
+    {#function getPoints()#}
+    {#{#}
+    {#   return points;}#}
+
 </script>
 </body>
 </html>
