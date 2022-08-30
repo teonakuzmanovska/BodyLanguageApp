@@ -5,6 +5,7 @@
 #
 # class StatisticsForm(forms.ModelForm):
 #     # i za ova ne sum bash sigurna, najchesto ne raboti
+#     # dopolnitelno da se smeni attr 'read' na soodvetniot gesture
 #     def __init__(self, *args, **kwargs):
 #         super(StatisticsForm, self).__init__(*args, **kwargs)
 #         for field in self.visible_fields():
