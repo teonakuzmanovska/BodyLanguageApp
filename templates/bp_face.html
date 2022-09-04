@@ -42,38 +42,38 @@
 <div class="row justify-content-center" id="middle">
     <div class="col-4 mb-4">
         <h3 class="my-5 text-center">Face</h3>
-        <div class="d-grid gap-2-auto justify-content-center">
+        <div class="d-grid gap-2-auto">
             {% for bp_f in bp_face %}
                 <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ bp_f.id }}')"><b>{{ bp_f.gesture }}</b></button>
 {#                generik za site gestures. Hidden se site gestures dodeka ne se kliknat #}
                 <div id="{{ bp_f.id }}" style="display: none">
-                    <div class="card my-4" style="width: 18rem;">
+                    <div class="card my-4 mx-auto" style="width: 18rem;">
                         <img src="{{ MEDIA_URL }}{{ bp_f.image.url }}" class="card-img-top">
                         <div class="card-body">
                             <div class="row text-center">
                                 <h5 class="card-title col-10">{{ bp_f.gesture }}</h5>
                                 {% if not bp_f.read %} {# ako ne e prochitana lekcijata #}
-{#                                    <form method="post">#}
-{#                                        {% csrf_token %}#}
+                                    <form method="post" action="">
+                                        {% csrf_token %}
 {#                                      tuka kje se kreira hidden form preku koja kje se prakjaat podatoci na forms.py #}
                                         <div style="display: none" id="hiddenFormRead"></div>
-                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read', '{{ bp_f.read }}', '{{ bp_f.id }}')">☑</button>
-{#                                    </form>#}
+                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read', '{{ bp_f.id }}')">☑</button>
+                                    </form>
                                 {% endif %}
                                 {% if bp_f.read %} {# ako e prochitana lekcijata #}
-{#                                    <form method="post">#}
-{#                                        {% csrf_token %}#}
+                                    <form method="post" action="">
+                                        {% csrf_token %}
 {#                                      tuka kje se kreira hidden form preku koja kje se prakjaat podatoci na forms.py #}
                                         <div style="display: none" id="hiddenFormUnread"></div>
-                                        <button {# type="submit" #} class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read', '{{ bp_f.read }}', '{{ bp_f.id }}')">✅</button>
-{#                                    </form>#}
+                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}unread" onclick="read('{{ bp_f.id }}unread', '{{ bp_f.id }}')">✅</button>
+                                    </form>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="my-4">
-                        <h5>Meaning among adults: </h5>
+                        <h5 class="text-center">Meaning among adults: </h5>
                         <table class="table table-bordered text-center">
                         <tr>
                             <th>Male</th>
@@ -101,7 +101,7 @@
                     </div>
 
                     <div class="my-4">
-                        <h5>Meaning among children: </h5>
+                        <h5 class="text-center">Meaning among children: </h5>
                         <table class="table table-bordered text-center">
                         <tr>
                             <th>Male</th>
@@ -162,32 +162,52 @@
     points = 0;
 
     // poentata na funkcijava e da pratam preku forma podatoci mesto da prakjam so return posho ne znam kako da gi pristapam od html-ot (pred toa imav return na objekti)
-    function read(button_id, read_value, gesture_id)
+    function read(button_id, gesture_id)
     {
-        {#// presmetuvanje poeni vo zavisnost od read_value#}
+
+        // neka ne e hidden formata, neka ima samo check kopche
+        
+        // event listener onclick api(definiranoto vo urls) ajax povik
+
+        // presmetuvanje poeni vo zavisnost od read_value
         {#if (read_value)#}
         {#{#}
         {#    points--;}#}
         {#else#}
         {#{#}
         {#    points++;}#}
-        {##}
-        {#// prakjanje poeni i podatoci za soodveten gesture preku forma#}
-        {#{% for bp_f in bp_face %}#}
-        {#    if (gesture_id === {{ bp_f.id }})#}
-        {#    {#}
-        {#        // to-do: da se istestira dali raboti#}
-        {##}
-        {#        hiddenForm =#}
-        {#            "<input type='hidden' name='gesture' value="+gesture_id+">" +#}
-        {#            "<input type='hidden' name='gesture' value="+read_value+">" +#}
-        {#            "<input type='hidden' name='points' value="+points+">"#}
-        {##}
-        {#         // sledno bi bilo da se dosredi ova vo forms.py#}
-        {#    }#}
-        {#{% endfor %}#}
-        {##}
-        {#// go menjame kopcheto i polnime hidden form vo html#}
+
+        // prakjanje poeni i podatoci za soodveten gesture preku forma
+        {% for bp_f in bp_face %}
+            if (gesture_id === {{ bp_f.id }})
+            {
+                // to-do: da se istestira dali raboti
+
+            // ako e prochitano, stavi value false (neprochitano)
+            {% if bp_f.read %}
+                document.getElementById("hiddenFormUnread").innerHTML =
+                        {#"<input type='hidden' name='gesture' value="+gesture_id+">" +#}
+                        "<input type='hidden' name='gesture' value="+false+">"
+                        {#"<input type='hidden' name='points' value="+points+">"#}
+                document.getElementById(button_id).innerHTML = "☑";
+            {% endif %}
+
+            // ako ne e prochitano, stavi value true (prochitano)
+            {% if not bp_f.read %}
+                document.getElementById("hiddenFormRead").innerHTML =
+                            {#"<input type='hidden' name='gesture' value="+gesture_id+">" +#}
+                            "<input type='hidden' name='gesture' value="+true+">"
+                            {#"<input type='hidden' name='points' value="+points+">"#}
+                document.getElementById(button_id).innerHTML = "✅";
+            {% endif %}
+
+                 // sledno bi bilo da se dosredi ova vo forms.py
+            }
+
+
+        {% endfor %}
+
+        // go menjame kopcheto i polnime hidden form vo html
         {#if(read_value)#}
         {#{#}
         {#    document.getElementById("hiddenFormRead").innerHTML = hiddenForm;#}
@@ -201,14 +221,10 @@
 
         // ova e za dodeka ne profunkcionira gorniot del od funkcijata
 
-        if (document.getElementById(button_id).innerHTML === "✅")
-        {
-            document.getElementById(button_id).innerHTML = "☑";
-        }
-        else
-        {
-            document.getElementById(button_id).innerHTML = "✅";
-        }
+        {#if (document.getElementById(button_id).innerHTML === "✅")#}
+        {#    document.getElementById(button_id).innerHTML = "☑";#}
+        {#else#}
+        {#    document.getElementById(button_id).innerHTML = "✅";#}
 
     }
 

@@ -34,4 +34,5 @@ urlpatterns = [
     path('emotions/', emotions, name="emotions"),
     path('context/', context, name="context"),
     path('bp_face/', bp_face, name="bp_face")
+#     ushte eden view i url za api-to, nema da vrakja kontekst tuku kje pravi promena vo baza
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

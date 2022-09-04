@@ -33,7 +33,10 @@ def quizzes(request):
 
 
 def progress(request):
-    return render(request, "progress.html")
+    # stavi user attr u gesture
+    lectures = BodyPartGesture.objects.filter(read=True).count()
+    context={"lectures": lectures}
+    return render(request, "progress.html", context=context)
 
 
 def body_parts(request):
@@ -50,17 +53,19 @@ def context(request):
 
 def bp_face(request):
     # za ova ich ne sum sigurna
-    # if request.method == "post":
-    #     form_data = Statistics(data=request.POST, files=request.FILES)
-    #     if form_data.is_valid():
-    #         statistics = form_data.save(commit=False)
-    #         statistics.user = request.user
-    #         statistics.lectures += form_data.cleaned_data['lectures']  # ovde sakam da gi dodadam/odzemam poenite shto se prevzemeni od formata
-    #         statistics.save()
-    #         return redirect("bp_face")  # da ne se zbuni so redirect-ov?
+    if request.method == "post":
+        form_data = Statistics(data=request.POST, files=request.FILES)
+        if form_data.is_valid():
+            statistics = form_data.save(commit=False)
+            statistics.user = request.user
+            statistics.lectures += form_data.cleaned_data['lectures']  # ovde sakam da gi dodadam/odzemam poenite shto se prevzemeni od formata
+            statistics.save()
+            return redirect("bp_face")  # da ne se zbuni so redirect-ov?
 
     queryset = BodyPartGesture.objects.filter(category="eyes").all()
     context = {"bp_face": queryset}  # , "form": form_data
     return render(request, "bp_face.html", context=context)
+
+# zemi go toa pole i smeni, api-to da e povikano vo template
 
 

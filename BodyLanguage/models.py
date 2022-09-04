@@ -18,6 +18,7 @@ class Meaning(models.Model):
 
 
 class BodyPartGesture(models.Model):
+    # stavi user attr
     gesture = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to="images/")
@@ -57,7 +58,7 @@ class Behaviour(models.Model):
 
 class TestResults(models.Model):
     # mislam deka nema potreba da se stavaat vo baza, na front end e dovolno, samo poenite ni se dovolni, kje se proveruva dali se tochni na frontend
-    id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True) #  ova nema da ti treba, izbrishi go
     points = models.IntegerField()
     taken = models.BooleanField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -67,6 +68,7 @@ class TestResults(models.Model):
     # da se dade prashanje dali saka retake, da se proveri prethoden score i da se apdejtiraat poenite
 
 
+# ova nema ni da ni treba na kraj izgleda, kje treba samo da staime user attr u gesture model
 class Statistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lectures = models.FloatField()
