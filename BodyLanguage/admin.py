@@ -6,11 +6,6 @@ from django.contrib.admin import display
 from BodyLanguage.models import *
 
 
-# class MeaningGestureAdmin(admin.StackedInline):
-#     model = MeaningGesture
-#     extra = 0
-
-
 class MeaningAdmin(admin.ModelAdmin):
     list_display = ('meaning',)
 
@@ -33,9 +28,8 @@ class MeaningAdmin(admin.ModelAdmin):
 admin.site.register(Meaning, MeaningAdmin)
 
 
-class BodyPartGestureAdmin(admin.ModelAdmin):
-    list_display = ('gesture', 'category')
-    list_filter = ('category', 'meaning')
+class ContextAdmin(admin.ModelAdmin):
+    list_display = ('context',)
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -53,31 +47,11 @@ class BodyPartGestureAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(BodyPartGesture, BodyPartGestureAdmin)
-
-
-class ContextGestureAdmin(admin.ModelAdmin):
-
-    def has_delete_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        return False
-
-    def has_view_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        return False
-
-
-admin.site.register(ContextGesture, ContextGestureAdmin)
+admin.site.register(Context, ContextAdmin)
 
 
 class BehaviourAdmin(admin.ModelAdmin):
+    list_display = ('behaviour',)
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -98,7 +72,9 @@ class BehaviourAdmin(admin.ModelAdmin):
 admin.site.register(Behaviour, BehaviourAdmin)
 
 
-class TestResultsAdmin(admin.ModelAdmin):
+class GestureAdmin(admin.ModelAdmin):
+    list_display = ('gesture', 'category')
+    list_filter = ('category', 'meaning', 'context', 'behaviour')
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -110,25 +86,10 @@ class TestResultsAdmin(admin.ModelAdmin):
             return True
         return False
 
-
-admin.site.register(TestResults, TestResultsAdmin)
-
-
-class StatisticsAdmin(admin.ModelAdmin):
-
-    def has_delete_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        return False
-
-    def has_change_permission(self, request, obj=None):
+    def has_view_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         return False
 
 
-admin.site.register(Statistics, StatisticsAdmin)
-
-
-
-
+admin.site.register(Gesture, GestureAdmin)

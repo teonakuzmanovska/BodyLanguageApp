@@ -54,6 +54,8 @@ def context(request):
 def bp_face(request):
     # za ova ich ne sum sigurna
     if request.method == "post":
+        # ovde mislam metodot da bide gesture i da se smeni samo read value (dali da bide put?)
+        # drugata opcija e da se trgne read value od gestures i da se naprai nov metod readgesture, pa da se sozdavaat novi metodi, tpa
         form_data = Statistics(data=request.POST, files=request.FILES)
         if form_data.is_valid():
             statistics = form_data.save(commit=False)
