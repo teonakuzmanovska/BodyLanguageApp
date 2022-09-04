@@ -57,7 +57,7 @@
                 <div id="results"></div>
             </div>
             <h5 class="mt-4">Or choose from the categories below: </h5>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Body parts</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('random')"><b>Body parts</b></button>
             <div id="body_parts" style="display: none">
                 <div id="quiz"></div>
 {#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
@@ -65,7 +65,7 @@
                     <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
                 <div id="results"></div>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Emotions</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('emotions')"><b>Emotions</b></button>
             <div id="emotions" style="display: none">
                 <div id="quiz"></div>
 {#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
@@ -73,7 +73,7 @@
                     <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
                 <div id="results"></div>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Context</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('context')"><b>Context</b></button>
             <div id="context" style="display: none">
                 <div id="quiz"></div>
 {#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
@@ -81,7 +81,7 @@
                     <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
                 <div id="results"></div>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Behaviours</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('behaviours')"><b>Behaviours</b></button>
             <div id="behaviours" style="display: none">
                 <div id="quiz"></div>
 {#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}

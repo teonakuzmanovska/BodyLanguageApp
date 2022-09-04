@@ -34,7 +34,7 @@ def quizzes(request):
 
 def progress(request):
     # stavi user attr u gesture
-    lectures = BodyPartGesture.objects.filter(read=True).count()
+    lectures = Gesture.objects.filter(read=True).count()
     context={"lectures": lectures}
     return render(request, "progress.html", context=context)
 
@@ -43,8 +43,8 @@ def body_parts(request):
     return render(request, "body_parts.html")
 
 
-def emotions(request):
-    return render(request, "emotions.html")
+# def emotions(request):
+#     return render(request, "emotions.html")
 
 
 def context(request):
@@ -52,21 +52,22 @@ def context(request):
 
 
 def bp_face(request):
-    # za ova ich ne sum sigurna
-    if request.method == "post":
-        # ovde mislam metodot da bide gesture i da se smeni samo read value (dali da bide put?)
-        # drugata opcija e da se trgne read value od gestures i da se naprai nov metod readgesture, pa da se sozdavaat novi metodi, tpa
-        form_data = Statistics(data=request.POST, files=request.FILES)
-        if form_data.is_valid():
-            statistics = form_data.save(commit=False)
-            statistics.user = request.user
-            statistics.lectures += form_data.cleaned_data['lectures']  # ovde sakam da gi dodadam/odzemam poenite shto se prevzemeni od formata
-            statistics.save()
-            return redirect("bp_face")  # da ne se zbuni so redirect-ov?
-
-    queryset = BodyPartGesture.objects.filter(category="eyes").all()
-    context = {"bp_face": queryset}  # , "form": form_data
+    eyes = Gesture.objects.filter(category="eyes").all()
+    context = {"bp_face": eyes}  # , "form": form_data
     return render(request, "bp_face.html", context=context)
+
+
+def emotions(request):
+    happiness = Gesture.objects.filter(meaning__meaning="happiness").all()
+    sadness = Gesture.objects.filter(meaning__meaning="sadness").all()
+    shame = Gesture.objects.filter(meaning__meaning="shame").all()
+    guilt = Gesture.objects.filter(meaning__meaning="quilt").all()
+    disgust = Gesture.objects.filter(meaning__meaning="disgust").all()
+    anger = Gesture.objects.filter(meaning__meaning="anger").all()
+    fear = Gesture.objects.filter(meaning__meaning="fear").all()
+
+    context = {"happiness": happiness, "sadness": sadness, "shame": shame, "guilt": guilt, "disgust": disgust, "anger": anger, "fear": fear}
+    return render(request, "emotions.html", context=context)
 
 # zemi go toa pole i smeni, api-to da e povikano vo template
 

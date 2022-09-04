@@ -41,15 +41,120 @@
 {# middle #}
 <div class="row justify-content-center" id="middle">
     <div class="col-4 mb-4">
-        <h3 class="my-5 text-center">Choose emotion:</h3>
+        <h3 class="my-5 text-center">Emotions</h3>
         <div class="d-grid gap-2-auto">
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Happiness</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Sadness</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Shame</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Guilt</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Disgust</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Anger</b></a>
-            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Fear</b></a>
+            <h5 class="my-2">Happiness</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for happy in happiness %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ happy.id }}')"><b>{{ happy.gesture }}</b></button>
+                        <div id="{{ happy.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ happy.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ happy.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Sadness</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for sad in sadness %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ sad.id }}')"><b>{{ sad.gesture }}</b></button>
+                        <div id="{{ sad.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ sad.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ sad.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Shame</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for sh in shame %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ sh.id }}')"><b>{{ sh.gesture }}</b></button>
+                        <div id="{{ sh.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ sh.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ sh.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Guilt</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for guilty in guilt %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ guilty.id }}')"><b>{{ guilty.gesture }}</b></button>
+                        <div id="{{ guilty.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ guilty.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ guilty.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Disgust</h5>
+            <div class="d-grid gap-2-auto">
+                    {% for disgusted in disgust %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ disgusted.id }}')"><b>{{ disgusted.gesture }}</b></button>
+                        <div id="{{ disgusted.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ disgusted.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ disgusted.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Anger</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for angry in anger %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ angry.id }}')"><b>{{ angry.gesture }}</b></button>
+                        <div id="{{ angry.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ angry.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ angry.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            <h5 class="my-2">Fear</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for afraid in fear %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleGesture('{{ afraid.id }}')"><b>{{ afraid.gesture }}</b></button>
+                        <div id="{{ afraid.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ afraid.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ afraid.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
         </div>
     </div>
 </div>
@@ -65,6 +170,15 @@
         </div>
     </div>
 </footer>
-
+<script>
+    function toggleGesture(gesture)
+    {
+      let x = document.getElementById(gesture);
+      if (x.style.display === "none")
+        x.style.display = "block";
+      else
+        x.style.display = "none";
+    }
+</script>
 </body>
 </html>

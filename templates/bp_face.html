@@ -52,24 +52,24 @@
                         <div class="card-body">
                             <div class="row text-center">
                                 <h5 class="card-title col-10">{{ bp_f.gesture }}</h5>
-                                {% if not bp_f.read %} {# ako ne e prochitana lekcijata #}
+{#                                {% if not bp_f.read %} {# ako ne e prochitana lekcijata #}
 {#                                    <form method="post" action="">#}
 {#                                        {% csrf_token %}#}
 {#                                        {{ form.as_p }}#}
 {#                                      tuka kje se kreira hidden form preku koja kje se prakjaat podatoci na forms.py #}
-                                        <div style="display: none" id="hiddenFormRead"></div>
-                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read', '{{ bp_f.id }}')">☑</button>
+{#                                        <div style="display: none" id="hiddenFormRead"></div>#}
+{#                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}read" onclick="read('{{ bp_f.id }}read', '{{ bp_f.id }}')">☑</button>#}
 {#                                    </form>#}
-                                {% endif %}
-                                {% if bp_f.read %} {# ako e prochitana lekcijata #}
+{#                                {% endif %}#}
+{#                                {% if bp_f.read %} {# ako e prochitana lekcijata #}
 {#                                    <form method="post" action="">#}
 {#                                        {% csrf_token %}#}
 {#                                        {{ form.as_p }}#}
 {#                                      tuka kje se kreira hidden form preku koja kje se prakjaat podatoci na forms.py #}
-                                        <div style="display: none" id="hiddenFormUnread"></div>
-                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}unread" onclick="read('{{ bp_f.id }}unread', '{{ bp_f.id }}')">✅</button>
+{#                                        <div style="display: none" id="hiddenFormUnread"></div>#}
+{#                                        <button type="submit" class="btn col-2 p-0" id="{{ bp_f.id }}unread" onclick="read('{{ bp_f.id }}unread', '{{ bp_f.id }}')">✅</button>#}
 {#                                    </form>#}
-                                {% endif %}
+{#                                {% endif %}#}
                             </div>
                         </div>
                     </div>
@@ -161,26 +161,26 @@
         x.style.display = "none";
     }
 
-    points = 0;
+    {#points = 0;#}
 
     // poentata na funkcijava e da pratam preku forma podatoci mesto da prakjam so return posho ne znam kako da gi pristapam od html-ot (pred toa imav return na objekti)
-    function read(button_id, gesture_id)
-    {
-
-        // neka ne e hidden formata, neka ima samo check kopche
-        
-        // event listener onclick api(definiranoto vo urls) ajax povik
-
-        // presmetuvanje poeni vo zavisnost od read_value
+{#    function read(button_id, gesture_id)#}
+{#    {#}
+{##}
+{#        // neka ne e hidden formata, neka ima samo check kopche#}
+{#        #}
+{#        // event listener onclick api(definiranoto vo urls) ajax povik#}
+{##}
+{#        // presmetuvanje poeni vo zavisnost od read_value#}
         {#if (read_value)#}
         {#{#}
         {#    points--;}#}
         {#else#}
         {#{#}
         {#    points++;}#}
-
-        // prakjanje poeni i podatoci za soodveten gesture preku forma
-    // tuka da se pristapuva noviot model readgesture i da se sozdavaat novi instanci rpeku forma, izgleda taka kje bide najlesno
+{##}
+{#        // prakjanje poeni i podatoci za soodveten gesture preku forma#}
+{#    // tuka da se pristapuva noviot model readgesture i da se sozdavaat novi instanci rpeku forma, izgleda taka kje bide najlesno#}
 {#        {% for bp_f in bp_face %}#}
 {#            if (gesture_id === {{ bp_f.id }})#}
 {#            {#}
@@ -209,8 +209,8 @@
 {##}
 {##}
 {#        {% endfor %}#}
-
-        // go menjame kopcheto i polnime hidden form vo html
+{##}
+{#        // go menjame kopcheto i polnime hidden form vo html#}
         {#if(read_value)#}
         {#{#}
         {#    document.getElementById("hiddenFormRead").innerHTML = hiddenForm;#}
@@ -219,17 +219,17 @@
         {#{#}
         {#    document.getElementById("hiddenFormUnread").innerHTML = hiddenForm;#}
         {#    document.getElementById(button_id).innerHTML = "☑";}#}
-
+{##}
 {#    ___________________________________________________________________________________________________________________________________________#}
-
-        // ova e za dodeka ne profunkcionira gorniot del od funkcijata
-
-        if (document.getElementById(button_id).innerHTML === "✅")
-            document.getElementById(button_id).innerHTML = "☑";
-        else
-            document.getElementById(button_id).innerHTML = "✅";
-
-    }
+{##}
+{#        // ova e za dodeka ne profunkcionira gorniot del od funkcijata#}
+{##}
+{#        if (document.getElementById(button_id).innerHTML === "✅")#}
+{#            document.getElementById(button_id).innerHTML = "☑";#}
+{#        else#}
+{#            document.getElementById(button_id).innerHTML = "✅";#}
+{##}
+{#    }#}
 
 </script>
 </body>
