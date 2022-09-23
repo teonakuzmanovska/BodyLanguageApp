@@ -39,9 +39,15 @@
         <ul class="nav navbar-nav d-flex">
             <li class="nav-item"><a class="nav-link" href="{% url "contact" %}">Contact</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url "help" %}">Help</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url "logout" %}">Log out</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url "login" %}">Log in</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
+{% if user.is_authenticated %}
 {# middle #}
 <div class="row justify-content-center" id="middle">
     <div class="col-4 mb-4">
@@ -92,6 +98,13 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class="alert alert-success" role="alert">
+    <h3>Welcome!</h3>
+    <a href="{% url 'register' %}">Signup</a>
+    <a href="{% url 'login' %}">Login</a>
+</div>
+{% endif %}
 {# footer #}
 <footer class="row justify-content-center bg-light fixed-bottom">
     <div class="col-4 bg-light">

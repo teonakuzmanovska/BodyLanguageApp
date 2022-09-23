@@ -1,11 +1,28 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from BodyLanguage.forms import UserRegistrationForm
 from BodyLanguage.models import *
+from django.contrib import messages
 
 
 def index(request):
     return render(request, "index.html")
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, f'Your account has been created. You can log in now!')
+            return redirect('login')
+    else:
+        form = UserRegistrationForm()
+
+    context = {'form': form}
+    return render(request, 'register.html', context)
 
 
 def contact(request):
@@ -34,27 +51,15 @@ def quizzes(request):
 
 def progress(request):
     # stavi user attr u gesture
-    lectures = Gesture.objects.filter(read=True).count()
-    context={"lectures": lectures}
-    return render(request, "progress.html", context=context)
+    # lectures = Gesture.objects.filter(read=True).count()
+    # context={"lectures": lectures}
+    return render(request, "progress.html")
 
 
 def body_parts(request):
-    return render(request, "body_parts.html")
-
-
-# def emotions(request):
-#     return render(request, "emotions.html")
-
-
-def context(request):
-    return render(request, "context.html")
-
-
-def bp_face(request):
     eyes = Gesture.objects.filter(category="eyes").all()
-    context = {"bp_face": eyes}  # , "form": form_data
-    return render(request, "bp_face.html", context=context)
+    context = {"eyes": eyes}  # , "form": form_data
+    return render(request, "body_parts.html", context=context)
 
 
 def emotions(request):
@@ -68,6 +73,10 @@ def emotions(request):
 
     context = {"happiness": happiness, "sadness": sadness, "shame": shame, "guilt": guilt, "disgust": disgust, "anger": anger, "fear": fear}
     return render(request, "emotions.html", context=context)
+
+
+def context(request):
+    return render(request, "context.html")
 
 # zemi go toa pole i smeni, api-to da e povikano vo template
 

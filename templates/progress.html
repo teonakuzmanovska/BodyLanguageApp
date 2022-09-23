@@ -35,19 +35,25 @@
         <ul class="nav navbar-nav d-flex">
             <li class="nav-item"><a class="nav-link" href="{% url "contact" %}">Contact</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url "help" %}">Help</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url "logout" %}">Log out</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url "login" %}">Log in</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
+{% if user.is_authenticated %}
 {# middle #}
 <div id="middle" class="row justify-content-center">
     <div class="col-4">
         <h3 class="m-5 text-center">Progress</h3>
-        <div class="my-4">
-            <h6 class="text-center">Lectures</h6>
-            <div class="progress" style="height: 25px">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-label="Example with label" style="width: {{ lectures }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><b>{{ lectures }}%</b></div>
-            </div>
-        </div>
+{#        <div class="my-4">#}
+{#            <h6 class="text-center">Lectures</h6>#}
+{#            <div class="progress" style="height: 25px">#}
+{#                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-label="Example with label" style="width: {{ lectures }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><b>{{ lectures }}%</b></div>#}
+{#            </div>#}
+{#        </div>#}
 
         <div class="my-4">
             <h6 class="text-center">Quizzes</h6>
@@ -57,6 +63,14 @@
         </div>
     </div>
 </div>
+
+{% else %}
+<div class="alert alert-success" role="alert">
+    <h3>Welcome!</h3>
+    <a href="{% url 'register' %}">Signup</a>
+    <a href="{% url 'login' %}">Login</a>
+</div>
+{% endif %}
 
 {# footer #}
 <footer class="row justify-content-center bg-light fixed-bottom">
