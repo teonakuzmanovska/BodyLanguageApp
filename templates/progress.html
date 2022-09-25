@@ -43,7 +43,6 @@
         </ul>
     </div>
 </nav>
-{% if user.is_authenticated %}
 {# middle #}
 <div id="middle" class="row justify-content-center">
     <div class="col-4">
@@ -63,14 +62,6 @@
         </div>
     </div>
 </div>
-
-{% else %}
-<div class="alert alert-success" role="alert">
-    <h3>Welcome!</h3>
-    <a href="{% url 'register' %}">Signup</a>
-    <a href="{% url 'login' %}">Login</a>
-</div>
-{% endif %}
 
 {# footer #}
 <footer class="row justify-content-center bg-light fixed-bottom">

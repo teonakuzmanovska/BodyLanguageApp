@@ -3,18 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <style>
+        html {
+          height: 100%;
+        }
+        html body {
+          height: 100%;
+          overflow: hidden;
+        }
+        #middle {
+          position: absolute;
+          top: 50px;
+          bottom: 30px;
+          right: 0;
+          left: 0;
+          overflow-y: auto;
+        }
+        quiz
+        .answers label{
+          display: block;
+        }
+    </style>
 </head>
 <body>
-<h3>login</h3>
-
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-        <p>{{ field.label }}: <br> {{ field }}</p>
-    {% endfor %}
-    <button type="submit">Login</button>
-</form>
-
-<p>Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
+{# header #}
+<nav class="row justify-content-center navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid col-4">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url "index" %}">Home</a>
+        </div>
+        <ul class="nav navbar-nav d-flex">
+            <li class="nav-item"><a class="nav-link" href="{% url "contact" %}">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url "help" %}">Help</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url "logout" %}">Log out</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url "login" %}">Log in</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{#    middle #}
+<div class="row justify-content-center" id="middle">
+    <div class="text-center col-4 mb-4" style="background-color: #d2d2d2" role="alert">
+        <h3 class="my-5">Welcome!</h3>
+        <form class="m-5" action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}" class="btn btn-danger">Register here</a></p>
+    </div>
+</div>
+{# footer #}
+<footer class="row justify-content-center bg-light fixed-bottom">
+    <div class="col-4 bg-light">
+        <div class="row justify-content-center">
+            <a class="btn col-2 m-2 shadow" href="{% url "tips" %}"><h2>💡</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "articles" %}"><h2>🌐</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "categories" %}"><h2>📖</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "quizzes" %}"><h2>📝</h2></a>
+            <a class="btn col-2 m-2 shadow" href="{% url "progress" %}"><h2>📈</h2></a>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

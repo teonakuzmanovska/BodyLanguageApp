@@ -128,3 +128,4 @@ MEDIA_URL = '/media/' # ni go dava url-to do fajlovite koga kje go pobarame vo t
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login'

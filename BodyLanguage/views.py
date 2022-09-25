@@ -46,14 +46,21 @@ def categories(request):
 
 
 def quizzes(request):
-    return render(request, "quizzes.html")
+
+    if request.user.is_authenticated:
+        return render(request, "quizzes.html")
+    else:
+        return redirect("/login/")
 
 
 def progress(request):
     # stavi user attr u gesture
     # lectures = Gesture.objects.filter(read=True).count()
     # context={"lectures": lectures}
-    return render(request, "progress.html")
+    if request.user.is_authenticated:
+        return render(request, "progress.html")
+    else:
+        return redirect("/login/")
 
 
 def body_parts(request):
