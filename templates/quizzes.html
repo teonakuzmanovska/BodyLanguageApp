@@ -64,7 +64,7 @@
             <div id="random" style="display: none">
                 <form method='post' action=''>
                     {% csrf_token %}
-                    {% for q  in random %}
+                    {% for q in random %}
                         <div class="form-group">
                             <label for="question">{{ q.question }}</label>
                         </div>
@@ -110,7 +110,7 @@
             <div id="body_parts" style="display: none">
                 <form method='post' action=''>
                     {% csrf_token %}
-                    {% for q  in body_parts %}
+                    {% for q in body_parts %}
                         <div class="form-group">
                             <label for="question">{{ q.question }}</label>
                         </div>
@@ -155,7 +155,7 @@
             <div id="emotions" style="display: none">
                 <form method='post' action=''>
                     {% csrf_token %}
-                    {% for q  in emotions %}
+                    {% for q in emotions %}
                         <div class="form-group">
                             <label for="question">{{ q.question }}</label>
                         </div>
@@ -200,7 +200,7 @@
             <div id="context" style="display: none">
                 <form method='post' action=''>
                     {% csrf_token %}
-                    {% for q  in contexts %}
+                    {% for q in contexts %}
                         <div class="form-group">
                             <label for="question">{{ q.question }}</label>
                         </div>
@@ -245,7 +245,7 @@
             <div id="behaviours" style="display: none">
                 <form method='post' action=''>
                     {% csrf_token %}
-                    {% for q  in behaviours %}
+                    {% for q in behaviours %}
                         <div class="form-group">
                             <label for="question">{{ q.question }}</label>
                         </div>

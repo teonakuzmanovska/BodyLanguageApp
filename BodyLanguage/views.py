@@ -52,17 +52,16 @@ def quizzes(request):
 
             questions = Question.objects.all()
             points = 0
-
+            # category = ""
             for q in questions:
                 if q.ans == request.POST.get(q.question):
                     points += 1
+                # category = request.POST.get(q.category)
             #  ako vekje e reshen testot izbrishi gi poenite, pa stavi gi novite
 
-            # ovde koga filtriram rezultati samo na tekovno logiran user e izbagirano
-            if Results.objects.count():
-                Results.objects.all().delete()
+            if Results.objects.filter(user=request.user).count():
+                Results.objects.filter(user=request.user).all().delete()
 
-            # mi treba samo rezultatite na tekovno logiraniot user da gi smenam.
             result = Results(points=points, user=request.user)
             result.save()
 
@@ -88,9 +87,16 @@ def progress(request):
     # stavi user attr u gesture
     # lectures = Gesture.objects.filter(read=True).count()
     # context={"lectures": lectures}
+
     if request.user.is_authenticated:
-        points = Results.objects.all()
-        context = {"points": points}
+        points = Results.objects.filter(user=request.user).all()
+        random = Results.objects.filter(user=request.user).filter(category="random").all()
+        body_parts = Results.objects.filter(user=request.user).filter(category="body_parts").all()
+        emotions = Results.objects.filter(user=request.user).filter(category="emotions").all()
+        contexts = Results.objects.filter(user=request.user).filter(category="contexts").all()
+        behaviours = Results.objects.filter(user=request.user).filter(category="behaviours").all()
+        # to-do da se prerachunaat procenti od poenite i da se pratat preku context
+        context = {"points": points, "random": random, "body_parts": body_parts, "emotions": emotions, "contexts": contexts, "behaviours": behaviours}
         return render(request, 'progress.html', context=context)
     else:
         return redirect("/login/")
