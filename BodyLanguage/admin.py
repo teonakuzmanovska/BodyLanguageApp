@@ -93,3 +93,50 @@ class GestureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Gesture, GestureAdmin)
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question', 'category')
+    list_filter = ('category',)
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+
+admin.site.register(Question, QuestionAdmin)
+
+
+class ResultsAdmin(admin.ModelAdmin):
+    list_display = ('category',)
+    list_filter = ('category',)
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+    def has_view_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return False
+
+
+admin.site.register(Results, ResultsAdmin)
+

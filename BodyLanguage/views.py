@@ -48,7 +48,38 @@ def categories(request):
 def quizzes(request):
 
     if request.user.is_authenticated:
-        return render(request, "quizzes.html")
+        if request.method == "POST":
+
+            questions = Question.objects.all()
+            points = 0
+
+            for q in questions:
+                if q.ans == request.POST.get(q.question):
+                    points += 1
+            #  ako vekje e reshen testot izbrishi gi poenite, pa stavi gi novite
+
+            # ovde koga filtriram rezultati samo na tekovno logiran user e izbagirano
+            if Results.objects.count():
+                Results.objects.all().delete()
+
+            # mi treba samo rezultatite na tekovno logiraniot user da gi smenam.
+            result = Results(points=points, user=request.user)
+            result.save()
+
+            # return render(request, 'results.html')
+            return redirect('progress')
+
+        else:
+            # questions = Question.objects.all()
+            random = Question.objects.filter(category="random").all()
+            body_parts = Question.objects.filter(category="body_parts").all()
+            emotions = Question.objects.filter(category="emotions").all()
+            contexts = Question.objects.filter(category="contexts").all()
+            behaviours = Question.objects.filter(category="behaviours").all()
+
+            context = {"random": random, "body_parts": body_parts, "emotions": emotions, "contexts": contexts, "behaviours": behaviours}
+            return render(request, 'quizzes.html', context=context)
+
     else:
         return redirect("/login/")
 
@@ -58,7 +89,9 @@ def progress(request):
     # lectures = Gesture.objects.filter(read=True).count()
     # context={"lectures": lectures}
     if request.user.is_authenticated:
-        return render(request, "progress.html")
+        points = Results.objects.all()
+        context = {"points": points}
+        return render(request, 'progress.html', context=context)
     else:
         return redirect("/login/")
 

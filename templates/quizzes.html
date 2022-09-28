@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Quizzes</title>
-<!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
     <style>
         html {
-          height: 100%;
+            height: 100%;
         }
+
         html body {
-          height: 100%;
-          overflow: hidden;
+            height: 100%;
+            overflow: hidden;
         }
+
         #middle {
-          position: absolute;
-          top: 50px;
-          bottom: 30px;
-          right: 0;
-          left: 0;
-          overflow-y: auto;
+            position: absolute;
+            top: 50px;
+            bottom: 30px;
+            right: 0;
+            left: 0;
+            overflow-y: auto;
         }
-    {#    quiz #}
-        .answers label{
-          display: block;
+
+        {#    quiz #}
+        .answers label {
+            display: block;
         }
     </style>
 </head>
@@ -41,8 +47,8 @@
             <li class="nav-item"><a class="nav-link" href="{% url "help" %}">Help</a></li>
             {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url "logout" %}">Log out</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url "login" %}">Log in</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url "login" %}">Log in</a></li>
             {% endif %}
         </ul>
     </div>
@@ -53,46 +59,231 @@
         <h3 class="my-5 text-center">Quizzes</h3>
         <div class="d-grid gap-2-auto">
             <h5 class="mt-4">You can choose quiz with mixed random questions: </h5>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('random')"><b>Random</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                    onclick="toggleQuiz('random')"><b>Random</b></button>
             <div id="random" style="display: none">
-                <div id="quiz"></div>
-{#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
-                    <button id="submit" class="btn btn-success my-2">Submit Quiz</button>
-                    <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
-                <div id="results"></div>
+                <form method='post' action=''>
+                    {% csrf_token %}
+                    {% for q  in random %}
+                        <div class="form-group">
+                            <label for="question">{{ q.question }}</label>
+                        </div>
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option1"
+                                       checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op1 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op2 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option3">
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op3 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option4">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op4 }}
+                                </label>
+                            </div>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
             <h5 class="mt-4">Or choose from the categories below: </h5>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('random')"><b>Body parts</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                    onclick="toggleQuiz('body_parts')"><b>Body parts</b></button>
             <div id="body_parts" style="display: none">
-                <div id="quiz"></div>
-{#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
-                    <button id="submit" class="btn btn-success my-2">Submit Quiz</button>
-                    <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
-                <div id="results"></div>
+                <form method='post' action=''>
+                    {% csrf_token %}
+                    {% for q  in body_parts %}
+                        <div class="form-group">
+                            <label for="question">{{ q.question }}</label>
+                        </div>
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option1"
+                                       checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op1 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op2 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option3">
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op3 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option4">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op4 }}
+                                </label>
+                            </div>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('emotions')"><b>Emotions</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                    onclick="toggleQuiz('emotions')"><b>Emotions</b></button>
             <div id="emotions" style="display: none">
-                <div id="quiz"></div>
-{#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
-                    <button id="submit" class="btn btn-success my-2">Submit Quiz</button>
-                    <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
-                <div id="results"></div>
+                <form method='post' action=''>
+                    {% csrf_token %}
+                    {% for q  in emotions %}
+                        <div class="form-group">
+                            <label for="question">{{ q.question }}</label>
+                        </div>
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option1"
+                                       checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op1 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op2 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option3">
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op3 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option4">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op4 }}
+                                </label>
+                            </div>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('context')"><b>Context</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                    onclick="toggleQuiz('context')"><b>Context</b></button>
             <div id="context" style="display: none">
-                <div id="quiz"></div>
-{#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
-                    <button id="submit" class="btn btn-success my-2">Submit Quiz</button>
-                    <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
-                <div id="results"></div>
+                <form method='post' action=''>
+                    {% csrf_token %}
+                    {% for q  in contexts %}
+                        <div class="form-group">
+                            <label for="question">{{ q.question }}</label>
+                        </div>
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option1"
+                                       checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op1 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op2 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option3">
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op3 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option4">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op4 }}
+                                </label>
+                            </div>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
-            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b" onclick="toggleQuiz('behaviours')"><b>Behaviours</b></button>
+            <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                    onclick="toggleQuiz('behaviours')"><b>Behaviours</b></button>
             <div id="behaviours" style="display: none">
-                <div id="quiz"></div>
-{#                to-do: proverka dali testot e taken ili ne. ako e taken submit disabled, retake visible, ako ne e taken, vaka kako dole #}
-                    <button id="submit" class="btn btn-success my-2">Submit Quiz</button>
-                    <button id="retake" class="btn btn-success my-2" style="display: none; background-color: #006b8b" onclick="retakeQuiz()">Retake</button>
-                <div id="results"></div>
+                <form method='post' action=''>
+                    {% csrf_token %}
+                    {% for q  in behaviours %}
+                        <div class="form-group">
+                            <label for="question">{{ q.question }}</label>
+                        </div>
+                        <div class="form-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option1"
+                                       checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op1 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option2">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op2 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios1" value="option3">
+                                <label class="form-check-label" for="gridRadios1">
+                                    {{ q.op3 }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.question }}"
+                                       id="gridRadios2" value="option4">
+                                <label class="form-check-label" for="gridRadios2">
+                                    {{ q.op4 }}
+                                </label>
+                            </div>
+                            <br>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
             </div>
         </div>
     </div>
@@ -113,142 +304,14 @@
 <script>
     {# show quiz #}
 
-    function toggleQuiz(quiz)
-    {
-      let x = document.getElementById(quiz);
-      if (x.style.display === "none")
-        x.style.display = "block";
-      else
-        x.style.display = "none";
+    function toggleQuiz(quiz) {
+        let x = document.getElementById(quiz);
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
     }
 
-    {#quiz #}
-
-    (function () {
-
-        function buildQuiz() {
-            // variable to store the HTML output
-            const output = [];
-
-            // for each question...
-            myQuestions.forEach(
-                (currentQuestion, questionNumber) => {
-
-                    // variable to store the list of possible answers
-                    const answers = [];
-
-                    // and for each available answer...
-                    for (let letter in currentQuestion.answers) {
-
-                        // ...add an HTML radio button
-                        answers.push(
-                            `<label>
-                      <input type="radio" name="question${questionNumber}" value="${letter}">
-                      ${letter} :
-                      ${currentQuestion.answers[letter]}
-                    </label>`
-                        );
-                    }
-
-                    // add this question and its answers to the output
-                    output.push(
-                        `<div class="question"> ${currentQuestion.question} </div>
-                  <div class="answers"> ${answers.join('')} </div>`
-                    );
-                }
-            );
-
-            // finally combine our output list into one string of HTML and put it on the page
-            quizContainer.innerHTML = output.join('');
-        }
-
-        function showResults() {
-            // gather answer containers from our quiz
-            const answerContainers = quizContainer.querySelectorAll('.answers');
-
-            // keep track of user's answers
-            let numCorrect = 0;
-
-            // for each question...
-            myQuestions.forEach((currentQuestion, questionNumber) => {
-                // find selected answer
-                const answerContainer = answerContainers[questionNumber];
-                const selector = `input[name=question${questionNumber}]:checked`;
-                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-                // if answer is correct
-                if (userAnswer === currentQuestion.correctAnswer) {
-                    // add to the number of correct answers
-                    numCorrect++;
-
-                    // color the answers green
-                    answerContainers[questionNumber].style.color = 'green';
-                }
-                // if answer is wrong or blank
-                else {
-                    // color the answers red
-                    answerContainers[questionNumber].style.color = 'red';
-                }
-            });
-
-            // show number of correct answers out of total
-            resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-            // disable na submit, pojava na retake
-            document.getElementById("submit").disabled = true;
-            document.getElementById("retake").style.display = "inline";
-            {#    da gi smeni poenite, isto ko u bp_face da staime hidden forma shto kje prakja podatoci, pred toa smeni go modelot #}
-
-        }
-
-        const quizContainer = document.getElementById('quiz');
-        const resultsContainer = document.getElementById('results');
-        const submitButton = document.getElementById('submit');
-        const myQuestions = [
-            {
-                question: "Who invented JavaScript?",
-                answers: {
-                    a: "Douglas Crockford",
-                    b: "Sheryl Sandberg",
-                    c: "Brendan Eich"
-                },
-                correctAnswer: "c"
-            },
-            {
-                question: "Which one of these is a JavaScript package manager?",
-                answers: {
-                    a: "Node.js",
-                    b: "TypeScript",
-                    c: "npm"
-                },
-                correctAnswer: "c"
-            },
-            {
-                question: "Which tool can you use to ensure code quality?",
-                answers: {
-                    a: "Angular",
-                    b: "jQuery",
-                    c: "RequireJS",
-                    d: "ESLint"
-                },
-                correctAnswer: "d"
-            }
-        ];
-
-        // Kick things off
-        buildQuiz();
-
-        // Event listeners
-        submitButton.addEventListener('click', showResults);
-    })();
-
-    function retakeQuiz()
-    {
-        document.getElementById("submit").disabled = false;
-        document.getElementById("retake").style.display = "none";
-
-    {#    da gi smeni poenite, isto ko u bp_face da staime hidden forma shto kje prakja podatoci, pred toa smeni go modelot #}
-
-    }
 </script>
 </body>
 </html>

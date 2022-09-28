@@ -3,11 +3,11 @@ from django.db import models
 
 
 # Create your models here.
-class AppUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default=None)
-    surname = models.CharField(max_length=50, default=None)
-    email = models.EmailField(default=None)
+# class AppUser(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=50, default=None)
+#     surname = models.CharField(max_length=50, default=None)
+#     email = models.EmailField(default=None)
 
 
 class Meaning(models.Model):
@@ -48,6 +48,28 @@ class Gesture(models.Model):
 
     def str(self):
         return str(self.meaning)
+
+
+class Question(models.Model):
+    question = models.CharField(max_length=200,null=True)
+    op1 = models.CharField(max_length=200,null=True)
+    op2 = models.CharField(max_length=200,null=True)
+    op3 = models.CharField(max_length=200,null=True)
+    op4 = models.CharField(max_length=200,null=True)
+    ans = models.CharField(max_length=200,null=True)
+    category = models.CharField(max_length=200, null=True)
+
+    def str(self):
+        return str(self.question)
+
+
+class Results(models.Model):
+    category = models.CharField(max_length=200, null=True)
+    points = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def str(self):
+        return str(self.category)
 
 
 # class ContextGesture(models.Model):
