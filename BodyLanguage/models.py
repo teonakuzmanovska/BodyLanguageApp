@@ -2,14 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-# Create your models here.
-# class AppUser(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     name = models.CharField(max_length=50, default=None)
-#     surname = models.CharField(max_length=50, default=None)
-#     email = models.EmailField(default=None)
-
-
 class Meaning(models.Model):
     meaning = models.CharField(max_length=50)
 
@@ -64,7 +56,7 @@ class Question(models.Model):
 
 
 class Results(models.Model):
-    category = models.CharField(max_length=200, null=True)
+    category = models.CharField(max_length=200)
     points = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

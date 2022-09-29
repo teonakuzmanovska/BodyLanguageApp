@@ -46,26 +46,27 @@ def categories(request):
 
 
 def quizzes(request):
-
+    # global category
     if request.user.is_authenticated:
         if request.method == "POST":
 
             questions = Question.objects.all()
             points = 0
-            # category = ""
+            category = request.POST.get("category", "")
             for q in questions:
+                # pristapi go prashanjeto od request i posle toa pristapi ja negovata kategorija
+                # ako selektiraniot value e ist so q.ans (ima samo eden selektiran)
+                # samo kategorijata na prvite questions ja dava vaka.
                 if q.ans == request.POST.get(q.question):
                     points += 1
-                # category = request.POST.get(q.category)
+
             #  ako vekje e reshen testot izbrishi gi poenite, pa stavi gi novite
+            if Results.objects.filter(user=request.user).filter(category=category).count():
+                Results.objects.filter(user=request.user).filter(category=category).all().delete()
 
-            if Results.objects.filter(user=request.user).count():
-                Results.objects.filter(user=request.user).all().delete()
-
-            result = Results(points=points, user=request.user)
+            result = Results(category=category, points=points, user=request.user)
             result.save()
 
-            # return render(request, 'results.html')
             return redirect('progress')
 
         else:
@@ -76,7 +77,8 @@ def quizzes(request):
             contexts = Question.objects.filter(category="contexts").all()
             behaviours = Question.objects.filter(category="behaviours").all()
 
-            context = {"random": random, "body_parts": body_parts, "emotions": emotions, "contexts": contexts, "behaviours": behaviours}
+            context = {"random": random, "body_parts": body_parts, "emotions": emotions, "contexts": contexts,
+                       "behaviours": behaviours}
             return render(request, 'quizzes.html', context=context)
 
     else:
@@ -89,17 +91,62 @@ def progress(request):
     # context={"lectures": lectures}
 
     if request.user.is_authenticated:
-        points = Results.objects.filter(user=request.user).all()
+        # points = Results.objects.filter(user=request.user).all()
+
+        # instances of ResultsModel for all categories
         random = Results.objects.filter(user=request.user).filter(category="random").all()
         body_parts = Results.objects.filter(user=request.user).filter(category="body_parts").all()
         emotions = Results.objects.filter(user=request.user).filter(category="emotions").all()
         contexts = Results.objects.filter(user=request.user).filter(category="contexts").all()
         behaviours = Results.objects.filter(user=request.user).filter(category="behaviours").all()
+
+        # number of available tests
+        randomCount = Question.objects.filter(category="random").count()
+        body_partsCount = Question.objects.filter(category="body_parts").count()
+        emotionsCount = Question.objects.filter(category="emotions").count()
+        contextsCount = Question.objects.filter(category="contexts").count()
+        behavioursCount = Question.objects.filter(category="behaviours").count()
+
+        # sums for won points of each category
+        sumR = 0
+        sumBP = 0
+        sumE = 0
+        sumC = 0
+        sumB = 0
+
+        # suming won points
+        for r, bp, e, c, b in zip(random, body_parts, emotions, contexts, behaviours):
+            sumR += r.points
+            sumBP += bp.points
+            sumE += e.points
+            sumC += c.points
+            sumB += b.points
+
+        # calculating overal score
+        score = (percentage(sumR, randomCount) + percentage(sumBP, body_partsCount) + percentage(sumE, emotionsCount) +
+                 percentage(sumC, contextsCount) + percentage(sumB, behavioursCount)) / \
+                (randomCount + body_partsCount + emotionsCount + contextsCount + behavioursCount)
+
         # to-do da se prerachunaat procenti od poenite i da se pratat preku context
-        context = {"points": points, "random": random, "body_parts": body_parts, "emotions": emotions, "contexts": contexts, "behaviours": behaviours}
+        context = {
+            "score": score,
+            "random": percentage(sumR, randomCount),
+            "body_parts": percentage(sumBP, body_partsCount),
+            "emotions": percentage(sumE, emotionsCount),
+            "context": percentage(sumC, contextsCount),
+            "behaviours": percentage(sumB, behavioursCount),
+        }
         return render(request, 'progress.html', context=context)
     else:
         return redirect("/login/")
+
+
+#     function for calculating percentages
+def percentage(userPoints, allPoints):
+    if userPoints:
+        return (userPoints / allPoints) * 100
+    else:
+        return 0
 
 
 def body_parts(request):
@@ -117,7 +164,8 @@ def emotions(request):
     anger = Gesture.objects.filter(meaning__meaning="anger").all()
     fear = Gesture.objects.filter(meaning__meaning="fear").all()
 
-    context = {"happiness": happiness, "sadness": sadness, "shame": shame, "guilt": guilt, "disgust": disgust, "anger": anger, "fear": fear}
+    context = {"happiness": happiness, "sadness": sadness, "shame": shame, "guilt": guilt, "disgust": disgust,
+               "anger": anger, "fear": fear}
     return render(request, "emotions.html", context=context)
 
 
@@ -125,5 +173,3 @@ def context(request):
     return render(request, "context.html")
 
 # zemi go toa pole i smeni, api-to da e povikano vo template
-
-

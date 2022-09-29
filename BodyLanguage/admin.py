@@ -119,7 +119,7 @@ admin.site.register(Question, QuestionAdmin)
 
 
 class ResultsAdmin(admin.ModelAdmin):
-    list_display = ('category',)
+    list_display = ('category', 'points', 'user')
     list_filter = ('category',)
 
     def has_delete_permission(self, request, obj=None):
