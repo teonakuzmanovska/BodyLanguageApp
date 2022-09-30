@@ -9,93 +9,239 @@
 {# navbar #}
 {% include "navbar.html" %}
 {# content #}
-<div class="row justify-content-center" id="content">
+<div class="row justify-content-center mb-4" id="content">
     <div class="col-4 mb-4">
         <h3 class="my-5 text-center">Gestures by body parts</h3>
         <div class="d-grid gap-2-auto">
-            <h5 class="my-2">Eyes</h5>
-            <div class="d-grid gap-2-auto">
-                {% for eye in eyes %}
-                    <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
-                            onclick="toggleGesture('{{ eye.id }}')"><b>{{ eye.gesture }}</b></button>
-                    <div id="{{ eye.id }}" style="display: none">
-                        <div class="card my-4 mx-auto" style="width: 18rem;">
-                            <img src="{{ MEDIA_URL }}{{ eye.image.url }}" class="card-img-top">
-                            <div class="card-body">
-                                <div class="row text-center">
-                                    <h5 class="card-title col-10">{{ eye.gesture }}</h5>
+            {#        face#}
+            <div>
+                <h5 class="my-2">Face</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for f in face %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                                onclick="toggleGesture('{{ f.id }}')"><b>{{ f.gesture }}</b></button>
+                        <div id="{{ f.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ f.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ f.gesture }}</h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="my-4">
-                            <h5 class="text-center">Meaning among adults: </h5>
-                            <table class="table table-bordered text-center">
-                                <tr>
-                                    <th>Male</th>
-                                    <th>Female</th>
-                                </tr>
-                                <tr>
-                                    {% if  eye.adult and eye.male %}
-                                        <td>
-                                            {% for meaning in eye.meaning.all %}
-                                                {{ meaning.meaning }}
-                                                <br>
-                                            {% endfor %}
-                                        </td>
-                                    {% endif %}
-                                    {% if  eye.adult and eye.female %}
-                                        <td>
-                                            {% for meaning in eye.meaning.all %}
-                                                {{ meaning.meaning }}
-                                                <br>
-                                            {% endfor %}
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            </table>
-                        </div>
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among adults: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  f.adult and f.male %}
+                                            <td>
+                                                {% for meaning in f.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  f.adult and f.female %}
+                                            <td>
+                                                {% for meaning in f.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
 
-                        <div class="my-4">
-                            <h5 class="text-center">Meaning among children: </h5>
-                            <table class="table table-bordered text-center">
-                                <tr>
-                                    <th>Male</th>
-                                    <th>Female</th>
-                                </tr>
-                                <tr>
-                                    {% if  eye.adult and eye.male %}
-                                        <td>
-                                            {% for meaning in eye.meaning.all %}
-                                                {{ meaning.meaning }}
-                                                <br>
-                                            {% endfor %}
-                                        </td>
-                                    {% endif %}
-                                    {% if  eye.adult and eye.female %}
-                                        <td>
-                                            {% for meaning in eye.meaning.all %}
-                                                {{ meaning.meaning }}
-                                                <br>
-                                            {% endfor %}
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            </table>
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among children: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  f.adult and f.male %}
+                                            <td>
+                                                {% for meaning in f.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  f.adult and f.female %}
+                                            <td>
+                                                {% for meaning in f.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
+                    {% endfor %}
+                </div>
+            </div>
+{#        arms#}
+                    <div>
+                <h5 class="my-2">Arms</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for arm in arms %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                                onclick="toggleGesture('{{ arm.id }}')"><b>{{ arm.gesture }}</b></button>
+                        <div id="{{ arm.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ arm.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ arm.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among adults: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  arm.adult and arm.male %}
+                                            <td>
+                                                {% for meaning in arm.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  arm.adult and arm.female %}
+                                            <td>
+                                                {% for meaning in arm.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
 
-                    </div>
-                    </div>
-                {% endfor %}
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among children: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  arm.adult and arm.male %}
+                                            <td>
+                                                {% for meaning in arm.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  arm.adult and arm.female %}
+                                            <td>
+                                                {% for meaning in arm.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+{#        legs#}
+                    <div>
+                <h5 class="my-2">Legs</h5>
+                <div class="d-grid gap-2-auto">
+                    {% for leg in legs %}
+                        <button class="my-2 btn btn-danger text-white" style="background-color: #006b8b"
+                                onclick="toggleGesture('{{ leg.id }}')"><b>{{ leg.gesture }}</b></button>
+                        <div id="{{ leg.id }}" style="display: none">
+                            <div class="card my-4 mx-auto" style="width: 18rem;">
+                                <img src="{{ MEDIA_URL }}{{ leg.image.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <h5 class="card-title col-10">{{ leg.gesture }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among adults: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  leg.adult and leg.male %}
+                                            <td>
+                                                {% for meaning in leg.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  leg.adult and leg.female %}
+                                            <td>
+                                                {% for meaning in leg.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="my-4">
+                                <h5 class="text-center">Meaning among children: </h5>
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>Female</th>
+                                    </tr>
+                                    <tr>
+                                        {% if  leg.adult and leg.male %}
+                                            <td>
+                                                {% for meaning in leg.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        {% if  leg.adult and leg.female %}
+                                            <td>
+                                                {% for meaning in leg.meaning.all %}
+                                                    {{ meaning.meaning }}
+                                                    <br>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
         </div>
     </div>
-    {#        <div class="d-grid gap-2-auto">#}
-    {#            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b" href="{% url "eyeace" %}"><b>Face</b></a>#}
-    {#            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Head</b></a>#}
-    {#            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Chest</b></a>#}
-    {#            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Arms</b></a>#}
-    {#            <a class="my-2 btn btn-danger text-white" style="background-color: #006b8b"><b>Legs</b></a>#}
-    {#        </div>#}
-</div>
 </div>
 {# footer #}
 {% include "footer.html" %}

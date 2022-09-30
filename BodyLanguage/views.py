@@ -65,7 +65,7 @@ def quizzes(request):
             result = Results(category=category, points=points, user=request.user)
             result.save()
 
-            return redirect('progress')
+            return redirect("progress")
 
         else:
             random = Question.objects.filter(category="random").all()
@@ -140,8 +140,12 @@ def percentage(userPoints, allPoints):
 
 
 def body_parts(request):
-    eyes = Gesture.objects.filter(category="eyes").all()
-    context = {"eyes": eyes}  # , "form": form_data
+    face = Gesture.objects.filter(category="face").all()
+    arms = Gesture.objects.filter(category="arms").all()
+    legs = Gesture.objects.filter(category="legs").all()
+
+    context = {"face": face, "arms": arms, "legs": legs}
+
     return render(request, "body_parts.html", context=context)
 
 
@@ -149,7 +153,7 @@ def emotions(request):
     happiness = Gesture.objects.filter(meaning__meaning="happiness").all()
     sadness = Gesture.objects.filter(meaning__meaning="sadness").all()
     shame = Gesture.objects.filter(meaning__meaning="shame").all()
-    guilt = Gesture.objects.filter(meaning__meaning="quilt").all()
+    guilt = Gesture.objects.filter(meaning__meaning="guilt").all()
     disgust = Gesture.objects.filter(meaning__meaning="disgust").all()
     anger = Gesture.objects.filter(meaning__meaning="anger").all()
     fear = Gesture.objects.filter(meaning__meaning="fear").all()
@@ -162,4 +166,3 @@ def emotions(request):
 def context(request):
     return render(request, "context.html")
 
-# zemi go toa pole i smeni, api-to da e povikano vo template
