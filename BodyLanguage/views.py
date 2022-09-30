@@ -46,7 +46,6 @@ def categories(request):
 
 
 def quizzes(request):
-    # global category
     if request.user.is_authenticated:
         if request.method == "POST":
 
@@ -100,20 +99,13 @@ def progress(request):
         contextsCount = Question.objects.filter(category="contexts").count()
         behavioursCount = Question.objects.filter(category="behaviours").count()
 
-        # sums for won points of each category
-        sumR = 0
-        sumBP = 0
-        sumE = 0
-        sumC = 0
-        sumB = 0
 
-        # suming won points
-        for r, bp, e, c, b in zip(random, body_parts, emotions, contexts, behaviours):
-            sumR += r.points
-            sumBP += bp.points
-            sumE += e.points
-            sumC += c.points
-            sumB += b.points
+        # sum of points for each test
+        sumR = hasObjects(Results.objects.filter(user=request.user).filter(category="random").count(), random)
+        sumBP = hasObjects(Results.objects.filter(user=request.user).filter(category="body_parts").count(), body_parts)
+        sumE = hasObjects(Results.objects.filter(user=request.user).filter(category="emotions").count(), emotions)
+        sumC = hasObjects(Results.objects.filter(user=request.user).filter(category="contexts").count(), contexts)
+        sumB = hasObjects(Results.objects.filter(user=request.user).filter(category="behaviours").count(), behaviours)
 
         # calculating overal score
         score = (sumBP + sumE + sumC + sumB) * 100 / (body_partsCount + emotionsCount + contextsCount + behavioursCount) + percentage(sumR, randomCount)/10
@@ -133,8 +125,24 @@ def progress(request):
 
 #     function for calculating percentages
 def percentage(userPoints, allPoints):
-    if userPoints:
+    if type(userPoints) == int:
         return (userPoints / allPoints) * 100
+    else:
+        return 0
+
+
+# tuka gi presmetuvame poenite koga sme sigurni deka ima objekti
+def sumPoints(points):
+    sum = 0
+    for point in points:
+        sum += point.points
+    return sum
+
+
+# proveruvame dali ima objekti, ako da - povikuvame sumPoints, ako ne - vrakjame 0
+def hasObjects(brObjekti, poeni):
+    if brObjekti > 0:
+        return sumPoints(poeni)
     else:
         return 0
 
