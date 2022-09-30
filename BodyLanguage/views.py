@@ -54,9 +54,7 @@ def quizzes(request):
             points = 0
             category = request.POST.get("category", "")
             for q in questions:
-                # pristapi go prashanjeto od request i posle toa pristapi ja negovata kategorija
                 # ako selektiraniot value e ist so q.ans (ima samo eden selektiran)
-                # samo kategorijata na prvite questions ja dava vaka.
                 if q.ans == request.POST.get(q.question):
                     points += 1
 
@@ -70,7 +68,6 @@ def quizzes(request):
             return redirect('progress')
 
         else:
-            # questions = Question.objects.all()
             random = Question.objects.filter(category="random").all()
             body_parts = Question.objects.filter(category="body_parts").all()
             emotions = Question.objects.filter(category="emotions").all()
@@ -86,12 +83,8 @@ def quizzes(request):
 
 
 def progress(request):
-    # stavi user attr u gesture
-    # lectures = Gesture.objects.filter(read=True).count()
-    # context={"lectures": lectures}
 
     if request.user.is_authenticated:
-        # points = Results.objects.filter(user=request.user).all()
 
         # instances of ResultsModel for all categories
         random = Results.objects.filter(user=request.user).filter(category="random").all()
@@ -123,11 +116,8 @@ def progress(request):
             sumB += b.points
 
         # calculating overal score
-        score = (percentage(sumR, randomCount) + percentage(sumBP, body_partsCount) + percentage(sumE, emotionsCount) +
-                 percentage(sumC, contextsCount) + percentage(sumB, behavioursCount)) / \
-                (randomCount + body_partsCount + emotionsCount + contextsCount + behavioursCount)
+        score = (sumBP + sumE + sumC + sumB) * 100 / (body_partsCount + emotionsCount + contextsCount + behavioursCount) + percentage(sumR, randomCount)/10
 
-        # to-do da se prerachunaat procenti od poenite i da se pratat preku context
         context = {
             "score": score,
             "random": percentage(sumR, randomCount),

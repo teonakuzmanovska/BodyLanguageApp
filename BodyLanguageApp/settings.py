@@ -119,6 +119,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/") # apsolutnata pateka kaj shto se sochuvani fajlovite
 MEDIA_URL = '/media/' # ni go dava url-to do fajlovite koga kje go pobarame vo templejt
 
