@@ -37,6 +37,11 @@ class TestCategoriesPage(StaticLiveServerTestCase):
             self.browser.current_url,
             body_url
         )
+        # The user sees content on body parts page
+        self.assertEquals(
+            self.browser.find_element(By.TAG_NAME, 'h3').text,
+            'Gestures by body parts'
+        )
 
     def test_emotions_button_redirects_to_emotions(self):
         self.browser.get(self.live_server_url)
@@ -50,6 +55,11 @@ class TestCategoriesPage(StaticLiveServerTestCase):
         self.assertEquals(
             self.browser.current_url,
             body_url
+        )
+        # The user sees content on body parts page
+        self.assertEquals(
+            self.browser.find_element(By.TAG_NAME, 'h3').text,
+            'Gestures by emotions'
         )
 
     def test_context_button_redirects_to_context(self):
