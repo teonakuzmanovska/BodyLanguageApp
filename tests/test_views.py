@@ -65,9 +65,9 @@ class TestViews(TestCase):
         response = self.client.get(reverse('quizzes'))
         self.assertEquals(response.status_code, 302)
 
-    # narednive 2 se pokomplicirani, za kraj gi ostavam
     def test_quizzes_GET_render_questions(self):
         response = self.client.get(reverse('quizzes'))
+        # The user is logged in
         if response.context is not None:
             self.assertIn('random', response.context)
             self.assertIn('body_parts', response.context)
@@ -94,6 +94,7 @@ class TestViews(TestCase):
 
     def test_progress_GET_render_progress(self):
         response = self.client.get(reverse('progress'))
+        # The user is logged in
         if response.context is not None:
             self.assertIn('score', response.context)
             self.assertIn('random', response.context)
@@ -104,29 +105,6 @@ class TestViews(TestCase):
 
             self.assertEquals(response.status_code, 200)
             self.assertTemplateUsed(response, 'progress.html')
-
-    # functions
-    def test_percentage(self):
-        userPoints = 62
-        allPoints = 100
-
-        self.assertEquals(percentage(userPoints, allPoints), (userPoints / allPoints) * 100)
-
-    def test_percentage_no_points(self):
-        self.assertEquals(percentage("abc", 100), 0)
-
-    def test_sumPoints(self):
-        sum = 0
-        for point in self.points:
-            sum += point.points
-
-        self.assertEquals(sumPoints(self.points), sum)
-
-    def test_hasObjects_false(self):
-        self.assertEquals(hasObjects(brObjekti=0, poeni=self.points), 0)
-
-    def test_hasObjects_true(self):
-        self.assertEquals(hasObjects(brObjekti=3, poeni=self.points), sumPoints(points=self.points))
 
     def test_body_parts_GET(self):
         response = self.client.get(reverse('body_parts'))
@@ -156,5 +134,28 @@ class TestViews(TestCase):
         response = self.client.get(reverse('context'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'context.html')
+
+    # functions
+    def test_percentage(self):
+        userPoints = 62
+        allPoints = 100
+
+        self.assertEquals(percentage(userPoints, allPoints), (userPoints / allPoints) * 100)
+
+    def test_percentage_no_points(self):
+        self.assertEquals(percentage("abc", 100), 0)
+
+    def test_sumPoints(self):
+        sum = 0
+        for point in self.points:
+            sum += point.points
+
+        self.assertEquals(sumPoints(self.points), sum)
+
+    def test_hasObjects_false(self):
+        self.assertEquals(hasObjects(brObjekti=0, poeni=self.points), 0)
+
+    def test_hasObjects_true(self):
+        self.assertEquals(hasObjects(brObjekti=3, poeni=self.points), sumPoints(points=self.points))
 
 
