@@ -28,7 +28,7 @@ class Gesture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     gesture = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="images/")
+    image = models.ImageField(upload_to="images/", blank=True)
     meaning = models.ManyToManyField(Meaning)  # meaning of gesture
     context = models.ManyToManyField(Context, blank=True)  # optional context
     behaviour = models.ManyToManyField(Behaviour, blank=True)  # optional behaviour
