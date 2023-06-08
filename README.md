@@ -14,6 +14,6 @@ Due to changes in heroku pricing, the website link is not functional anymore.
 
 ## How to use the app:
 - create user account
-- to access the lectures click the read the  `📖` button or add `/categories` in the URL
+- to access the lectures click the  `📖` button or add `/categories` in the URL
 - to take the quizzes click the `📝` button or add `/quizzes` in the URL
 - to see your progress click the `📈` button or add `progress` in the URL
